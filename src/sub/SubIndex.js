@@ -3,7 +3,6 @@ import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { BuildingIndex } from "./building/BuildingIndex";
 import { Camera } from "./Camera";
-import { Rain } from "./weather/Rain";
 
 export const SubIndex = () => {
   return (
