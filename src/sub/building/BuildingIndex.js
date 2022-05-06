@@ -1,4 +1,4 @@
-import { useBox, usePlane } from "@react-three/cannon";
+import { usePlane } from "@react-three/cannon";
 import { Color } from "three";
 import { Vector3 } from "three";
 import { SubStore } from "../../stores/SubStore";
@@ -11,13 +11,6 @@ export const BuildingIndex = () => {
     position: [0, -0.5, 0],
     rotation: [-Math.PI / 2, 0, 0],
     args: [1200, 1200],
-  }));
-  const [boxRef, boxApi] = useBox(() => ({
-    mass: 1,
-    type: "Dynamic",
-    position: [0, 200, 0],
-    rotation: [-Math.PI / 2, 0, 0],
-    args: [10, 10, 10],
   }));
   const planeArray = new Array(30).fill(0);
   return (
@@ -68,10 +61,6 @@ export const BuildingIndex = () => {
         <planeGeometry args={[1200, 1200]} />
         <meshBasicMaterial color={"DarkSlateGray"} />
       </mesh>
-      {/* <mesh ref={boxRef}>
-        <boxGeometry args={[10, 10, 10]} />
-        <meshNormalMaterial />
-      </mesh> */}
       <Construction />
     </group>
   );
