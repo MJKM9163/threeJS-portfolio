@@ -1,8 +1,7 @@
-import { usePlane } from "@react-three/cannon";
-import { Color } from "three";
-import { Vector3 } from "three";
+import { Color, Vector3 } from "three";
 import { SubStore } from "../../stores/SubStore";
 import { Construction } from "./Construction";
+import { usePlane } from "@react-three/cannon";
 
 export const BuildingIndex = () => {
   const [planeRef, planeApi] = usePlane(() => ({
@@ -14,8 +13,8 @@ export const BuildingIndex = () => {
   }));
   const planeArray = new Array(30).fill(0);
   return (
-    <group>
-      <group position={[-580, 0, -580]}>
+    <group dispose={null}>
+      <group position={[-580, 0.1, -580]}>
         {planeArray.map((item, index_x) => (
           <group key={"planeX" + index_x}>
             {planeArray.map((item, index_z) => (
