@@ -4,8 +4,7 @@ import { Suspense } from "react";
 import { Camera } from "./Camera";
 import { Light } from "./Light";
 import { Loading } from "./Loading";
-import { ShapesIndex } from "./Shapes/ShapesIndex";
-import { StartScreen } from "./StartScreen";
+import { StartScreen } from "../sub/StartScreen";
 // import { EffectComposer, DepthOfField, Bloom, Noise, Vignette } from "@react-three/postprocessing";
 
 export const Main = () => {
@@ -26,7 +25,7 @@ export const Main = () => {
         <Bloom luminanceThreshold={0.1} luminanceSmoothing={0.9} height={300} />
         <Vignette eskil={false} offset={0.1} darkness={0.9} />
       </EffectComposer> */}
-          <ShapesIndex />
+          {/* <ShapesIndex /> */}
           <Camera />
           <Light />
           <OrbitControls target={[0, 0, 0]} />
