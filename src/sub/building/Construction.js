@@ -1,6 +1,6 @@
 import { SubStore } from "../../stores/SubStore";
 
-const posArray = [];
+let posArray = [];
 
 const createFun = (endPos, keyNum) => {
   const xArray = [];
@@ -28,7 +28,7 @@ const createFun = (endPos, keyNum) => {
     zArray.push([zPos, zNum]);
   }
   posArray.push(
-    <group key={keyNum + keyNum} position={endPos}>
+    <group dispose={null} key={keyNum} position={endPos}>
       <mesh position={[xArray[0][0], yArray[0][0] / 2, zArray[0][0]]}>
         <boxGeometry args={[xArray[0][1], yArray[0][1], zArray[0][1]]} />
         <meshNormalMaterial />
@@ -51,9 +51,15 @@ const createFun = (endPos, keyNum) => {
 
 export const Construction = () => {
   const check = SubStore((state) => state.buildingPos);
+  const reload = SubStore.getState().buildingDefault;
   if (check.length > 0) {
     createFun(check[check.length - 1], check.length - 1);
   }
+  if (reload) {
+    posArray = [];
+    SubStore.setState({ buildingDefault: false });
+    SubStore.setState({ buildingPos: [] });
+  }
 
-  return <group>{posArray}</group>;
+  return <group dispose={null}>{posArray}</group>;
 };
