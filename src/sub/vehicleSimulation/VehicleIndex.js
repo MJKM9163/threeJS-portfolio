@@ -1,14 +1,15 @@
-import { useBox, usePlane, useSphere } from "@react-three/cannon";
-import Bongo from "./cars/Bongo";
+import { useBox } from "@react-three/cannon";
+import { Vehicle } from "./cars/hyundaiCar/Hyundai";
 
 export const VehicleIndex = () => {
   const catseyeArr = new Array(17).fill("catseye");
   const [roadRef, roadApi] = useBox(() => ({
     type: "Static",
     mass: 1,
-    rotation: [0, 0, 0.1],
+    rotation: [0, 0, 0], //z 0.1
     position: [0, 0, 0],
     args: [1250, 10, 625],
+    material: "ground",
   }));
   const [centerRef, centerApi] = useBox(() => ({
     type: "Dynamic",
@@ -37,7 +38,8 @@ export const VehicleIndex = () => {
           <meshNormalMaterial />
         </mesh>
       </group>
-      <Bongo rotation={[0, -Math.PI / 2, 0]} position={[0, 100, 0]} />
+      {/* <Bongo rotation={[0, -Math.PI / 2, 0]} position={[0, 100, 0]} /> */}
+      <Vehicle rotation={[0, 3, 0]} />
     </group>
   );
 };
