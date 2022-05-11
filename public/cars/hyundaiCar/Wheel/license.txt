@@ -1,6 +1,6 @@
 Model Information:
-* title:	Used studded tyre
-* source:	https://sketchfab.com/3d-models/used-studded-tyre-543c4830ab544e6a9ff5c322ef824508
+* title:	Studded Tyre
+* source:	https://sketchfab.com/3d-models/studded-tyre-3e20cb9e1e664f35b7f0dd26f305086b
 * author:	Lassi Kaukonen (https://sketchfab.com/thesidekick)
 
 Model License:
@@ -8,4 +8,4 @@ Model License:
 * requirements:	Author must be credited. Commercial use is allowed.
 
 If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
-This work is based on "Used studded tyre" (https://sketchfab.com/3d-models/used-studded-tyre-543c4830ab544e6a9ff5c322ef824508) by Lassi Kaukonen (https://sketchfab.com/thesidekick) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+This work is based on "Studded Tyre" (https://sketchfab.com/3d-models/studded-tyre-3e20cb9e1e664f35b7f0dd26f305086b) by Lassi Kaukonen (https://sketchfab.com/thesidekick) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
