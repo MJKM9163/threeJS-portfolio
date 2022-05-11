@@ -23,10 +23,10 @@ export function useControls() {
     brake: false,
     reset: false,
   });
-  useKeyPress(["ArrowUp"], (pressed) => (keys.current.forward = pressed));
-  useKeyPress(["ArrowDown"], (pressed) => (keys.current.backward = pressed));
-  useKeyPress(["ArrowLeft"], (pressed) => (keys.current.left = pressed));
-  useKeyPress(["ArrowRight"], (pressed) => (keys.current.right = pressed));
+  useKeyPress(["w"], (pressed) => (keys.current.forward = pressed));
+  useKeyPress(["s"], (pressed) => (keys.current.backward = pressed));
+  useKeyPress(["a"], (pressed) => (keys.current.left = pressed));
+  useKeyPress(["d"], (pressed) => (keys.current.right = pressed));
   useKeyPress([" "], (pressed) => (keys.current.brake = pressed));
   useKeyPress(["r"], (pressed) => (keys.current.reset = pressed));
 
