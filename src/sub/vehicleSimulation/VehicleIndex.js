@@ -1,14 +1,14 @@
-import { useBox } from "@react-three/cannon";
-import { Vehicle } from "./cars/hyundaiCar/Hyundai";
+import { useBox, usePlane } from "@react-three/cannon";
+import { CarIndex } from "./cars/hyundaiCar/CarIndex";
 
 export const VehicleIndex = () => {
   const catseyeArr = new Array(17).fill("catseye");
-  const [roadRef, roadApi] = useBox(() => ({
+  const [roadRef, roadApi] = usePlane(() => ({
     type: "Static",
     mass: 1,
-    rotation: [0, 0, 0], //z 0.1
+    rotation: [-Math.PI / 2, 0, 0], //z 0.1
     position: [0, 0, 0],
-    args: [1250, 10, 625],
+    args: [1000, 1000],
     material: "ground",
   }));
   const [centerRef, centerApi] = useBox(() => ({
@@ -21,8 +21,12 @@ export const VehicleIndex = () => {
   return (
     <group>
       <group name="Road">
-        <mesh ref={roadRef} rotation={[0, 0, 0]}>
-          <boxGeometry args={[1250, 10, 625]} />
+        <mesh
+          ref={roadRef}
+          userData={{ id: "floor" }}
+          rotation={[-Math.PI / 2, 0, 0]}
+          data={{ name: "floor" }}>
+          <planeGeometry args={[100, 100]} />
           <meshBasicMaterial color={"gray"} />
           <group>
             {catseyeArr.map((e, i) => (
@@ -38,8 +42,7 @@ export const VehicleIndex = () => {
           <meshNormalMaterial />
         </mesh>
       </group>
-      {/* <Bongo rotation={[0, -Math.PI / 2, 0]} position={[0, 100, 0]} /> */}
-      <Vehicle rotation={[0, 3, 0]} />
+      <CarIndex />
     </group>
   );
 };
