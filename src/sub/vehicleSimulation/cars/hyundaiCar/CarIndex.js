@@ -1,23 +1,24 @@
 import { useCylinder, useRaycastVehicle } from "@react-three/cannon";
 import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
-import { Vector3 } from "three";
+import { useEffect, useRef, useState } from "react";
 import { SubStore } from "../../../../stores/SubStore";
 import { useControls } from "../../useControls";
 import { Body } from "./Body";
 import { Wheel } from "./Wheel";
 let a = 0;
 export const CarIndex = ({ position, ...props }) => {
-  const main = useRef();
   const body = useRef();
   const wheel1 = useRef();
   const wheel2 = useRef();
   const wheel3 = useRef();
   const wheel4 = useRef();
   const controls = useControls();
-  const select = SubStore((state) => state.carSelect);
-  const data = SubStore.getState().carList;
-  const { common, option } = data[select];
+  const data = SubStore((state) => state.carCustom);
+  // const te = SubStore((state) => state.carCustom.common.front);
+
+  const { common, option } = data;
+  const { front } = common;
+  console.log(front);
 
   const wheelInfo1 = {
     ...option,
