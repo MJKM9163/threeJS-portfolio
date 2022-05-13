@@ -32,7 +32,7 @@ export const VehicleCanvas = () => {
         </Physics>
         <Camera />
         <Light />
-        <OrbitControls />
+        <OrbitControls target={[30, 0, 0]} />
       </Canvas>
     </>
   );

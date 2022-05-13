@@ -1,11 +1,12 @@
-import { useCylinder, useRaycastVehicle } from "@react-three/cannon";
+import { useBox, useRaycastVehicle } from "@react-three/cannon";
 import { useFrame } from "@react-three/fiber";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { SubStore } from "../../../../stores/SubStore";
 import { useControls } from "../../useControls";
 import { Body } from "./Body";
 import { Wheel } from "./Wheel";
 let a = 0;
+
 export const CarIndex = ({ position, ...props }) => {
   const body = useRef();
   const wheel1 = useRef();
@@ -14,57 +15,42 @@ export const CarIndex = ({ position, ...props }) => {
   const wheel4 = useRef();
   const controls = useControls();
   const data = SubStore((state) => state.carCustom);
-  // const te = SubStore((state) => state.carCustom.common.front);
+  const check = SubStore((state) => state.valueChenge);
 
   const { common, option } = data;
-  const { front } = common;
-  console.log(front);
+  // console.log(check);
 
-  const wheelInfo1 = {
-    ...option,
-    radius: common.radius,
-    isFrontWheel: true,
-    chassisConnectionPointLocal: [
-      -common.width / 1.5,
-      common.height,
-      common.front,
-    ],
-  };
-  const wheelInfo2 = {
-    ...option,
-    radius: common.radius,
-    isFrontWheel: true,
-    chassisConnectionPointLocal: [
-      common.width / 1.5,
-      common.height,
-      common.front,
-    ],
-  };
-  const wheelInfo3 = {
-    ...option,
-    radius: common.radius,
-    isFrontWheel: true,
-    chassisConnectionPointLocal: [
-      -common.width / 1.5,
-      common.height,
-      common.back,
-    ],
-  };
-  const wheelInfo4 = {
-    ...option,
-    radius: common.radius,
-    isFrontWheel: true,
-    chassisConnectionPointLocal: [
-      common.width / 1.5,
-      common.height,
-      common.back,
-    ],
-  };
+  let wheelInfos = [];
+  for (let i = 0; i < 4; i++) {
+    if (i < 2) {
+      wheelInfos.push({
+        ...option,
+        radius: common.radius,
+        isFrontWheel: true,
+        chassisConnectionPointLocal: [
+          i === 1 ? -common.width / 1.5 : common.width / 1.5,
+          common.height,
+          common.front,
+        ],
+      });
+    } else {
+      wheelInfos.push({
+        ...option,
+        radius: common.radius,
+        isFrontWheel: false,
+        chassisConnectionPointLocal: [
+          i === 3 ? -common.width / 1.5 : common.width / 1.5,
+          common.height,
+          common.back,
+        ],
+      });
+    }
+  }
 
   const [ref, api] = useRaycastVehicle(() => ({
     chassisBody: body,
     wheels: [wheel1, wheel2, wheel3, wheel4],
-    wheelInfos: [wheelInfo1, wheelInfo2, wheelInfo3, wheelInfo4],
+    wheelInfos: [...wheelInfos],
     indexForwardAxis: 2,
     indexRightAxis: 0,
     indexUpAxis: 1,
@@ -79,7 +65,6 @@ export const CarIndex = ({ position, ...props }) => {
       ? api.applyEngineForce(common.force * forceMultiplier, 0)
       : api.applyEngineForce(0, 0);
 
-    // S is referring to the front wheels
     for (let s = 0; s < 2; s++) {
       const steerMultiplier = left && !right ? 1 : -1;
 
@@ -88,7 +73,6 @@ export const CarIndex = ({ position, ...props }) => {
         : api.setSteeringValue(0, s);
     }
 
-    // B is referring to the back wheels
     for (let b = 2; b < 4; b++) {
       const brakeMultipler = brake ? common.maxBrake : 0;
       api.setBrake(brakeMultipler, b);
@@ -102,6 +86,10 @@ export const CarIndex = ({ position, ...props }) => {
       <Wheel ref={wheel2} />
       <Wheel ref={wheel3} left />
       <Wheel ref={wheel4} />
+      {/* <mesh>
+        <boxGeometry args={[front, 30, 30]} />
+        <meshNormalMaterial />
+      </mesh> */}
     </group>
   );
 };

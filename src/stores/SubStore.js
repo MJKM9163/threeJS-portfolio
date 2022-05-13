@@ -12,6 +12,7 @@ export const SubStore = create(
     buildingDefault: false,
     buildingPos: [],
 
+    valueChenge: false,
     carCustom: {
       common: {
         radius: 2,

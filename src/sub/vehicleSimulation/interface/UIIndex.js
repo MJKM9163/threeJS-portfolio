@@ -165,12 +165,14 @@ const customChange = (name) => {
 
 export const UIIndex = () => {
   const car = SubStore((state) => state.carCustom);
+  const reCheck = SubStore.getState().valueChenge;
   const { common, option } = car;
   const [hide, setHide] = useState(false);
   const [render, setRender] = useState(false);
 
   const valueChenge = (value, target, c) => {
     SubStore.setState((state) => (state.carCustom[c][target] = Number(value)));
+    SubStore.setState({ valueChenge: !reCheck });
     setRender(!render);
   };
 
@@ -224,7 +226,7 @@ export const UIIndex = () => {
             <input
               type={"range"}
               max={30}
-              min={0}
+              min={-30}
               step={0.1}
               value={common.front}
               onChange={(e) => {
@@ -240,7 +242,7 @@ export const UIIndex = () => {
             <input
               type={"range"}
               max={30}
-              min={0}
+              min={-30}
               step={0.1}
               value={common.back}
               onChange={(e) => {
@@ -274,6 +276,7 @@ export const UIIndex = () => {
                           e.target.value
                         ))
                     );
+                    SubStore.setState({ valueChenge: !reCheck });
                     setRender(!render);
                   }}
                 />
@@ -300,6 +303,7 @@ export const UIIndex = () => {
                           e.target.value
                         ))
                     );
+                    SubStore.setState({ valueChenge: !reCheck });
                     setRender(!render);
                   }}
                 />
@@ -326,6 +330,7 @@ export const UIIndex = () => {
                           e.target.value
                         ))
                     );
+                    SubStore.setState({ valueChenge: !reCheck });
                     setRender(!render);
                   }}
                 />
@@ -605,6 +610,7 @@ export const UIIndex = () => {
                           e.target.value
                         ))
                     );
+                    SubStore.setState({ valueChenge: !reCheck });
                     setRender(!render);
                   }}
                 />
@@ -627,6 +633,7 @@ export const UIIndex = () => {
                           e.target.value
                         ))
                     );
+                    SubStore.setState({ valueChenge: !reCheck });
                     setRender(!render);
                   }}
                 />
@@ -649,6 +656,7 @@ export const UIIndex = () => {
                           e.target.value
                         ))
                     );
+                    SubStore.setState({ valueChenge: !reCheck });
                     setRender(!render);
                   }}
                 />
@@ -672,6 +680,7 @@ export const UIIndex = () => {
                     (state.carCustom.option.useCustomSlidingRotationalSpeed =
                       !check)
                 );
+                SubStore.setState({ valueChenge: !reCheck });
                 setRender(!render);
               }}
             />

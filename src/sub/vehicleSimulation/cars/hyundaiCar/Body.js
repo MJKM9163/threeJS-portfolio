@@ -1,11 +1,10 @@
-import React, { forwardRef, useEffect } from "react";
+import React, { forwardRef } from "react";
 import { useGLTF } from "@react-three/drei";
-import { useBox, useCylinder } from "@react-three/cannon";
-import { Wheel } from "./Wheel";
+import { useBox } from "@react-three/cannon";
 
 export const Body = forwardRef(({ setVisible, ...props }, ref) => {
   const { nodes, materials } = useGLTF("/cars/hyundaiCar/hyundai/scene.gltf");
-  // console.log(ref);
+
   const [, api] = useBox(
     () => ({
       //type: "Dynamic",
@@ -16,7 +15,7 @@ export const Body = forwardRef(({ setVisible, ...props }, ref) => {
       ...props,
     }),
     ref
-  );
+  ); //
 
   return (
     <mesh ref={ref} api={api} scale={5}>
