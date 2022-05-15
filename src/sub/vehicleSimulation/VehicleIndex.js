@@ -1,4 +1,7 @@
 import { useBox, usePlane } from "@react-three/cannon";
+import { useFrame } from "@react-three/fiber";
+import { useState } from "react";
+import { SubStore } from "../../stores/SubStore";
 import { CarIndex } from "./cars/hyundaiCar/CarIndex";
 
 export const VehicleIndex = () => {
@@ -18,14 +21,11 @@ export const VehicleIndex = () => {
     position: [-50, 50, 200],
     args: [100, 25, 10],
   }));
+
   return (
     <group>
       <group name="Road">
-        <mesh
-          ref={roadRef}
-          userData={{ id: "floor" }}
-          rotation={[-Math.PI / 2, 0, 0]}
-          data={{ name: "floor" }}>
+        <mesh ref={roadRef} rotation={[-Math.PI / 2, 0, 0]}>
           <planeGeometry args={[100, 100]} />
           <meshBasicMaterial color={"gray"} />
           <group>

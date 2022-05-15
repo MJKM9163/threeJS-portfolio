@@ -5,7 +5,7 @@ import { SubStore } from "../../../../stores/SubStore";
 import { useControls } from "../../useControls";
 import { Body } from "./Body";
 import { Wheel } from "./Wheel";
-let a = 0;
+let a = -6.2;
 
 export const CarIndex = ({ position, ...props }) => {
   const body = useRef();
@@ -47,6 +47,7 @@ export const CarIndex = ({ position, ...props }) => {
     }
   }
 
+  console.log(check);
   const [ref, api] = useRaycastVehicle(() => ({
     chassisBody: body,
     wheels: [wheel1, wheel2, wheel3, wheel4],

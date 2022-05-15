@@ -21,11 +21,10 @@ export const VehicleCanvas = () => {
         <Physics
           gravity={[0, -20, 0]}
           iterations={1}
-          // broadphase="SAP"
-          // contactEquationRelaxation={4}
-          // friction={1e-3}
-          // allowSleep
-        >
+          broadphase="SAP"
+          contactEquationRelaxation={4}
+          friction={1e-3}
+          allowSleep>
           <Debug color={"white"} scale={1.01}>
             <VehicleIndex />
           </Debug>

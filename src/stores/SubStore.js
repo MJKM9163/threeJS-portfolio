@@ -1,3 +1,5 @@
+import { useRaycastVehicle } from "@react-three/cannon";
+import { useRef } from "react";
 import create from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 
