@@ -12,7 +12,7 @@ export const SubStore = create(
     buildingDefault: false,
     buildingPos: [],
 
-    glassChenge: false,
+    windChenge: false,
 
     valueChenge: false,
     carCustom: {
