@@ -8,6 +8,7 @@ const ListBox = styled.div`
     list-style: none;
     color: #dadada;
     background-color: #494949;
+    margin-bottom: 5px;
   }
   .lists {
     li {
