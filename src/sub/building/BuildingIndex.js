@@ -9,7 +9,6 @@ export const BuildingIndex = () => {
     type: "Static",
     position: [0, -0.5, 0],
     rotation: [-Math.PI / 2, 0, 0],
-    args: [1200, 1200],
   }));
   const planeArray = new Array(30).fill(0);
   return (

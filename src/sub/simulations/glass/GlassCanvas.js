@@ -2,10 +2,11 @@ import { Debug, Physics } from "@react-three/cannon";
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Camera } from "./Camera";
-import { WindIndex } from "./WindIndex";
+import { Collider } from "./Collider";
+import { GlassIndex } from "./GlassIndex";
 import { Light } from "./Light";
 
-export const WindCanvas = () => {
+export const GlassCanvas = () => {
   return (
     <>
       <Canvas
@@ -14,11 +15,12 @@ export const WindCanvas = () => {
           far: 50000,
           near: 3,
         }}>
-        <ambientLight intensity={0} />
         <color attach="background" args={["#585858"]} />
-        <Physics gravity={[0, -50, 0]}>
-          <Debug color={"blue"} scale={1.01}>
-            <WindIndex />
+        <ambientLight intensity={0} />
+        <Physics gravity={[0, 0, 0]}>
+          <Debug color={"white"} scale={1.01}>
+            <GlassIndex />
+            <Collider position={[0, 0, 150]} args={[10]} />
           </Debug>
         </Physics>
         <Camera />
