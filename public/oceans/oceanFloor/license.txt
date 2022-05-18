@@ -1,0 +1,11 @@
+Model Information:
+* title:	Ocean Floor 2 meters depth, Maui
+* source:	https://sketchfab.com/3d-models/ocean-floor-2-meters-depth-maui-3f67b6d2bc77407abe2b36f982c28370
+* author:	Reverse Imagineering (https://sketchfab.com/wesleymjames)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Ocean Floor 2 meters depth, Maui" (https://sketchfab.com/3d-models/ocean-floor-2-meters-depth-maui-3f67b6d2bc77407abe2b36f982c28370) by Reverse Imagineering (https://sketchfab.com/wesleymjames) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
