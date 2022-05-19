@@ -5,17 +5,21 @@ license: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 source: https://sketchfab.com/3d-models/guppy-fish-21e14e4b961e406385539f79eacdb1dc
 title: Guppy Fish
 */
-
 import React, { useEffect, useRef } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { Vector3 } from "three";
-let a = 0;
-let b = 0;
-let c = 0;
+import { useSphere } from "@react-three/cannon";
+
+let r = 0;
 export default function Guppy({ ...props }) {
   const rRef = useRef();
-  const pRef = useRef();
+  const [pRef, pApi] = useSphere(() => ({
+    type: "Kinematic",
+    mass: 1,
+    args: [1],
+    ...props,
+  }));
   const { nodes, materials, animations } = useGLTF("/oceans/guppy/scene.gltf");
   const { actions } = useAnimations(animations, pRef);
   useEffect(() => {
@@ -26,22 +30,18 @@ export default function Guppy({ ...props }) {
       const [tX, tY, tZ] = rRef.current.getWorldPosition(new Vector3());
       const [bX, bY, bZ] = pRef.current.getWorldPosition(new Vector3());
       pRef.current.lookAt(tX, tY, -tZ);
-      //console.log(tZ, bZ);
-      pRef.current.rotation.set(0, (c -= 0.002), 0);
-      pRef.current.position.set(
-        (a += (tX - bX) / 100),
-        200,
-        (b += (tZ - bZ) / 100)
-      ); // < -- velocity로 바꾸기
+
+      pApi.rotation.set(0.5, (r += 0.002), 0);
+      pApi.velocity.set((tX - bX) * 1.5, (tY - bY) * 1.5, (tZ - bZ) * 1.5);
     }
   });
   return (
     <group ref={pRef} {...props} dispose={null}>
       <mesh ref={rRef} name="rotation_pos" position={[0, 0, -5]}>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshNormalMaterial />
+        {/* <boxGeometry args={[1, 1, 1]} /> */}
+        {/* <meshNormalMaterial /> */}
       </mesh>
-      <group name="Sketchfab_Scene" castShadow>
+      <group name="Sketchfab_Scene">
         <group name="Sketchfab_model" rotation={[-Math.PI / 2, 0, 0]}>
           <group name="Root">
             <group
@@ -77,6 +77,7 @@ export default function Guppy({ ...props }) {
                 scale={[0.37, 0.61, 0.61]}
               />
               <skinnedMesh
+                castShadow
                 name="Circle_0"
                 geometry={nodes.Circle_0.geometry}
                 material={materials["Material.001"]}
@@ -89,12 +90,14 @@ export default function Guppy({ ...props }) {
                 skeleton={nodes.Circle001_0.skeleton}
               /> */}
               <skinnedMesh
+                castShadow
                 name="Circle002_0"
                 geometry={nodes.Circle002_0.geometry}
                 material={materials["Material.001"]}
                 skeleton={nodes.Circle002_0.skeleton}
               />
               <skinnedMesh
+                castShadow
                 name="Circle003_0"
                 geometry={nodes.Circle003_0.geometry}
                 material={materials["Material.001"]}
