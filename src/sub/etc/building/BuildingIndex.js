@@ -1,5 +1,5 @@
 import { Color, Vector3 } from "three";
-import { SubStore } from "../../stores/SubStore";
+import { SubStore } from "../../../stores/SubStore";
 import { Construction } from "./Construction";
 import { usePlane } from "@react-three/cannon";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { BuildingCanvas } from "./sub/building/Canvas";
+import { BuildingCanvas } from "./sub/etc/building/Canvas";
 import { OceanCanvas } from "./sub/exp/ocean/OceanCanvas";
 import { VehicleCanvas } from "./sub/simulations/vehicle/VehicleCanvas";
 import { StartScreen } from "./sub/startScreen/ScreenIndex";

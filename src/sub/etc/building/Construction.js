@@ -1,4 +1,4 @@
-import { SubStore } from "../../stores/SubStore";
+import { SubStore } from "../../../stores/SubStore";
 
 let posArray = [];
 
