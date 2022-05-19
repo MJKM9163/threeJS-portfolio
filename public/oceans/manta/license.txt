@@ -1,0 +1,11 @@
+Model Information:
+* title:	Manta ray bubble
+* source:	https://sketchfab.com/3d-models/manta-ray-bubble-c77139bed1b149c2ac8863909490193f
+* author:	AlmondFeather (https://sketchfab.com/almondfeather)
+
+Model License:
+* license type:	CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
+* requirements:	Author must be credited. No commercial use.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Manta ray bubble" (https://sketchfab.com/3d-models/manta-ray-bubble-c77139bed1b149c2ac8863909490193f) by AlmondFeather (https://sketchfab.com/almondfeather) licensed under CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
