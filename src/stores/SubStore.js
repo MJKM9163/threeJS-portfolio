@@ -4,13 +4,16 @@ import { subscribeWithSelector } from "zustand/middleware";
 export const SubStore = create(
   subscribeWithSelector((set, get) => ({
     screenList: {
-      exp: [["바다"]],
+      exp: [["바다 생물"]],
       simulation: [["차량 브레이크 고장 시뮬레이션"], ["유리 시뮬레이션"]],
       etc: [["미니 빌딩 세우기"], ["파인애플"]],
     },
 
     buildingDefault: false,
     buildingPos: [],
+
+    oceanData: false,
+    oceanHoverData: false,
 
     valueChenge: false,
     carCustom: {
