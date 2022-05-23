@@ -11,12 +11,17 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useSphere } from "@react-three/cannon";
 import { Vector3 } from "three";
+import { SubStore } from "../../../../stores/SubStore";
 
-let y = 0;
-let z = [0, 0];
-let r = [-1, 0];
-let check = false;
 export default function Manta({ ...props }) {
+  let y = 0;
+  let z = [0, 0]; // index 1 현재 값, index 2 상승 폭
+  let r = [-1, 0];
+  let check = false;
+  let straight = false;
+  let before = null;
+  let click = null;
+
   const rRef = useRef();
   const [pRef, pApi] = useSphere(() => ({
     type: "Kinematic",
@@ -29,38 +34,97 @@ export default function Manta({ ...props }) {
 
   useEffect(() => {
     actions.Swimming.play();
+    if (pRef.current) {
+      pRef.current.userData = {
+        name: "대왕쥐가오리(manta ray)",
+        habitat: "열대, 아열대",
+        characteristic: [
+          {
+            name: "거대한 가오리",
+            descript: "현존하는 가오리 중 가장 거대한 종",
+          },
+          {
+            name: "앞 지느러미",
+            descript: "앞 지느러미는 먹이를 입 주위로 모으는 역할을 한다.",
+          },
+          {
+            name: "여과 섭식자",
+            descript:
+              "여과 섭식자는 특화된 여과 구조를 가지고 있으며 물을 통과시켜 물속의 입자나 부유 물질을 걸러 먹는 포식자를 뜻한다.",
+          },
+        ],
+      };
+    }
   });
-  useFrame(() => {
+  useFrame(({ camera }) => {
     if (rRef.current) {
       const [tX, tY, tZ] = rRef.current.getWorldPosition(new Vector3());
       const [bX, bY, bZ] = pRef.current.getWorldPosition(new Vector3());
       pRef.current.lookAt(tX, tY, tZ);
 
+      if (click === true) {
+        camera.position.set(bX + 200, bY + 500, bZ + 500);
+        camera.lookAt(bX, bY, bZ);
+      } else if (click === false) {
+        camera.position.set(800, 1600, 1600);
+        camera.lookAt(0, 0, 0);
+        click = null;
+      }
+
       if (!check) {
         check = true;
-        const num = Math.floor(Math.random() * 2);
+        const num = Math.floor(Math.random() * 3);
         setTimeout(() => {
           check = false;
         }, 3000);
-        if (num === 1) {
-          r[1] = 0.001;
-          z[1] = 0.01;
-        } else {
-          r[1] = -0.001;
+
+        if (num === 0) {
+          r[1] = 0.003;
           z[1] = -0.01;
+          straight = false;
+          before = "left";
+        } else if (num === 1) {
+          r[1] = -0.003;
+          z[1] = 0.01;
+          straight = false;
+          before = "right";
+        } else if (num === 2) {
+          r[1] = 0;
+          z[1] = z[0] > 0 ? -0.01 : z[0] === 0 ? 0 : 0.01;
+          straight = true;
         }
-        //console.log(z[1], num);
       }
       pApi.rotation.set(y, (r[0] += r[1]), (z[0] += z[1]));
-      if (z[0] > 0.5 || z[0] < -0.5) {
+      if (!straight && (z[0] > 0.5 || z[0] < -0.5)) {
         z[1] = 0;
         z[0] = z[0] > 0.5 ? 0.49 : -0.49;
+      } else if (straight) {
+        if (before === "left" && z[0] > -0.01) {
+          z[1] = 0;
+          z[0] = 0;
+        } else if (before === "right" && z[0] < 0.01) {
+          z[1] = 0;
+          z[0] = 0;
+        }
       }
-      //pApi.velocity.set((tX - bX) / 20, (tY - bY) / 20, (tZ - bZ) / 20);
+      pApi.velocity.set((tX - bX) / 20, (tY - bY) / 20, (tZ - bZ) / 20);
+      if (bX < -1600) pApi.position.set(1590, bY, bZ);
+      if (bX > 1600) pApi.position.set(-1590, bY, bZ);
+      if (bZ < -1600) pApi.position.set(bX, bY, 1590);
+      if (bZ > 1600) pApi.position.set(bX, bY, -1590);
     }
   });
   return (
-    <group ref={pRef} {...props} dispose={null}>
+    <group
+      ref={pRef}
+      {...props}
+      dispose={null}
+      onClick={(e) => {
+        const data = SubStore.getState().oceanData;
+        e.stopPropagation();
+        click = click === null ? true : !check;
+        SubStore.setState({ oceanData: !data ? pRef.current.userData : false });
+      }}>
       <mesh ref={rRef} name="rotation_pos" position={[0, 0, 50]}></mesh>
       <group name="Sketchfab_Scene">
         <group
