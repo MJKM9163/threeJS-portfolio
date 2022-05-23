@@ -34,12 +34,10 @@ export default function BlueWhale({ ...props }) {
       pRef.current.lookAt(tX, tY, -tZ);
       pApi.rotation.set(0, (r -= 0.0005), 0);
       pApi.velocity.set((tX - bX) * 4, (tY - bY) * 4, (tZ - bZ) * 4);
-      //if (bX < -100) pApi.position.set(100, bY, bZ);
-      // if (bX < -300) pApi.position.set(490, bY, bZ);
-      ////if (bZ > 1000) pApi.position.set(bX, bY, -1000);
-      // if (bZ < -1500) pApi.position.set(1490, bY, bZ);
-      //console.log(bZ);
-      //X -300 500
+      if (bX < -1600) pApi.position.set(1590, bY, bZ);
+      if (bX > 1600) pApi.position.set(-1590, bY, bZ);
+      if (bZ < -1600) pApi.position.set(bX, bY, 1590);
+      if (bZ > 1600) pApi.position.set(bX, bY, -1590);
     }
   });
 
