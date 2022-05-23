@@ -1,7 +1,10 @@
+import { OrbitControls } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 
 export const Camera = () => {
   const { camera } = useThree();
-  camera.position.set(200, 600, 800);
-  camera.lookAt(0, 0, 0);
+
+  camera.position.set(800, 1600, 1600);
+
+  return <OrbitControls enablePan={false} />;
 };
