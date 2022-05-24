@@ -12,9 +12,6 @@ export const SubStore = create(
     buildingDefault: false,
     buildingPos: [],
 
-    oceanData: false,
-    oceanHoverData: false,
-
     valueChenge: false,
     carCustom: {
       common: {
