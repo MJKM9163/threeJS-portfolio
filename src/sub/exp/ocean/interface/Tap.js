@@ -43,7 +43,7 @@ const TapContainer = styled.div`
   }
   .imgBox:nth-child(2) {
     background-color: ${(props) =>
-      props.check === "고래" ? "white" : "#3d3d3d"};
+      props.check === "대왕고래" ? "white" : "#3d3d3d"};
     :hover {
       background-color: white;
     }
@@ -92,12 +92,12 @@ export const Tap = () => {
         className="imgBox"
         onClick={(e) => {
           OceanStore.setState({
-            oceanCameraTarget: !focusName ? "고래" : false,
+            oceanCameraTarget: !focusName ? "대왕고래" : false,
           });
         }}>
-        <img src="/oceans/icons/whale.png" alt="고래" />
+        <img src="/oceans/icons/whale.png" alt="대왕고래" />
         <div className="text">
-          <b>고래</b>
+          <b>대왕고래</b>
         </div>
       </div>
       <div
