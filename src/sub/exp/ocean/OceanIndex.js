@@ -1,5 +1,3 @@
-import { useBox } from "@react-three/cannon";
-import { useFrame } from "@react-three/fiber";
 import BlueWhale from "./models/BlueWhale";
 import Guppy from "./models/Guppy";
 import Manta from "./models/Manta";

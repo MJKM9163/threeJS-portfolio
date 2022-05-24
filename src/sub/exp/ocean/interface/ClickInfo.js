@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { SubStore } from "../../../../stores/SubStore";
+import { OceanStore } from "../OceanStore";
 
 const HoverContainer = styled.div`
   position: absolute;
@@ -21,7 +21,7 @@ const HoverContainer = styled.div`
 `;
 
 export const ClickInfo = () => {
-  const oceanHoverData = SubStore((state) => state.oceanHoverData);
+  const oceanHoverData = OceanStore((state) => state.oceanHoverData);
   return (
     <HoverContainer>
       {!oceanHoverData ? null : (
