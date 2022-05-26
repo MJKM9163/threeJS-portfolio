@@ -1,0 +1,11 @@
+Model Information:
+* title:	Barracuda Fish
+* source:	https://sketchfab.com/3d-models/barracuda-fish-d67b17fefee840a7a120058e1181bcab
+* author:	BlueMesh (https://sketchfab.com/VapTor)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Barracuda Fish" (https://sketchfab.com/3d-models/barracuda-fish-d67b17fefee840a7a120058e1181bcab) by BlueMesh (https://sketchfab.com/VapTor) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
