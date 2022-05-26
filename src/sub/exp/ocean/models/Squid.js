@@ -11,9 +11,12 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { Vector3 } from "three";
 import { useSphere } from "@react-three/cannon";
+import { OceanStore } from "../OceanStore";
 
-let r = 0;
 export default function Squid({ ...props }) {
+  let r = 0;
+  let cameraTarget = useRef(OceanStore.getState().oceanCameraTarget);
+
   const rRef = useRef();
   const [pRef, pApi] = useSphere(() => ({
     type: "Kinematic",
@@ -23,20 +26,45 @@ export default function Squid({ ...props }) {
   }));
   const { nodes, materials, animations } = useGLTF("/oceans/squid/scene.gltf");
   const { actions } = useAnimations(animations, pRef);
+
   useEffect(() => {
     actions["Take 001"].play();
   }, []);
-  useFrame(() => {
+
+  useEffect(() => {
+    OceanStore.subscribe(
+      (state) => (cameraTarget.current = state.oceanCameraTarget),
+      (state) => state
+    );
+  });
+
+  useFrame(({ camera }) => {
     if (rRef.current) {
       const [tX, tY, tZ] = rRef.current.getWorldPosition(new Vector3());
       const [bX, bY, bZ] = pRef.current.getWorldPosition(new Vector3());
       pRef.current.lookAt(tX, tY, tZ);
+
+      if (cameraTarget.current === "오징어") {
+        camera.position.set(bX + 150, bY + 325, bZ + 300);
+        camera.lookAt(bX, bY, bZ);
+      }
+
       pApi.rotation.set(0, (r -= 0.001), 0);
       pApi.velocity.set((tZ - bZ) / 15, (tY - bY) / 15, -(tX - bX) / 15);
     }
   });
   return (
-    <group ref={pRef} {...props} dispose={null}>
+    <group
+      ref={pRef}
+      {...props}
+      dispose={null}
+      onClick={(e) => {
+        const { oceanCameraTarget } = OceanStore.getState();
+        OceanStore.setState({
+          oceanCameraTarget: oceanCameraTarget !== "오징어" ? "오징어" : false,
+        });
+        e.stopPropagation();
+      }}>
       <mesh ref={rRef} name="rotation_pos" position={[0, 0, 50]}></mesh>
       <group name="Sketchfab_Scene">
         <group

@@ -6,14 +6,48 @@ source: https://sketchfab.com/3d-models/pocillopora-eydouxi-adf2d17b6355497cbadf
 title: Pocillopora eydouxi
 */
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useGLTF } from "@react-three/drei";
+import { OceanStore } from "../OceanStore";
+import { useFrame } from "@react-three/fiber";
+import { Vector3 } from "three";
 
 export default function Pocillopora({ ...props }) {
-  const group = useRef();
+  let cameraTarget = useRef(OceanStore.getState().oceanCameraTarget);
+
+  const pRef = useRef();
   const { nodes, materials } = useGLTF("/oceans/pocillopora/scene.gltf");
+
+  useEffect(() => {
+    OceanStore.subscribe(
+      (state) => (cameraTarget.current = state.oceanCameraTarget),
+      (state) => state
+    );
+  });
+
+  useFrame(({ camera }) => {
+    if (pRef.current) {
+      const [bX, bY, bZ] = pRef.current.getWorldPosition(new Vector3());
+
+      if (cameraTarget.current === "산호") {
+        camera.position.set(bX + 50, bY + 100, bZ + 30);
+        camera.lookAt(bX, bY, bZ);
+      }
+    }
+  });
+
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group
+      ref={pRef}
+      {...props}
+      dispose={null}
+      onClick={(e) => {
+        const { oceanCameraTarget } = OceanStore.getState();
+        OceanStore.setState({
+          oceanCameraTarget: oceanCameraTarget !== "산호" ? "산호" : false,
+        });
+        e.stopPropagation();
+      }}>
       <group rotation={[-Math.PI, 0, 0]}>
         <mesh
           geometry={nodes.Object_2.geometry}

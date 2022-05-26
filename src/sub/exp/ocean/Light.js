@@ -12,7 +12,7 @@ export const Light = () => {
         ref={pointLight}
         position={[0, 2000, 0]}
         color={"white"}
-        intensity={1}
+        intensity={0.7}
         castShadow
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}

@@ -50,7 +50,7 @@ export default function Manta({ ...props }) {
       pRef.current.lookAt(tX, tY, tZ);
 
       if (cameraTarget.current === "대왕쥐가오리") {
-        camera.position.set(bX + 200, bY + 500, bZ + 500);
+        camera.position.set(bX + 100, bY + 250, bZ + 250);
         camera.lookAt(bX, bY, bZ);
       }
 
@@ -105,11 +105,12 @@ export default function Manta({ ...props }) {
       onClick={(e) => {
         const { oceanCameraTarget } = OceanStore.getState();
         OceanStore.setState({
-          oceanCameraTarget: !oceanCameraTarget ? "대왕쥐가오리" : false,
+          oceanCameraTarget:
+            oceanCameraTarget !== "대왕쥐가오리" ? "대왕쥐가오리" : false,
         });
         e.stopPropagation();
       }}>
-      <mesh ref={rRef} name="rotation_pos" position={[0, 0, 50]}></mesh>
+      <mesh ref={rRef} name="rotation_pos" position={[0, 0, 50]} />
       <group name="Sketchfab_Scene">
         <group
           name="Sketchfab_model"

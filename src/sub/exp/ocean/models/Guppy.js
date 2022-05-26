@@ -10,9 +10,12 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { Vector3 } from "three";
 import { useSphere } from "@react-three/cannon";
+import { OceanStore } from "../OceanStore";
 
-let r = 0;
 export default function Guppy({ ...props }) {
+  let r = 0;
+  let cameraTarget = useRef(OceanStore.getState().oceanCameraTarget);
+
   const rRef = useRef();
   const [pRef, pApi] = useSphere(() => ({
     type: "Kinematic",
@@ -25,18 +28,41 @@ export default function Guppy({ ...props }) {
   useEffect(() => {
     actions["ArmatureAction.001"].play();
   }, []);
-  useFrame(() => {
+
+  useEffect(() => {
+    OceanStore.subscribe(
+      (state) => (cameraTarget.current = state.oceanCameraTarget),
+      (state) => state
+    );
+  });
+
+  useFrame(({ camera }) => {
     if (rRef.current) {
       const [tX, tY, tZ] = rRef.current.getWorldPosition(new Vector3());
       const [bX, bY, bZ] = pRef.current.getWorldPosition(new Vector3());
       pRef.current.lookAt(tX, tY, -tZ);
+
+      if (cameraTarget.current === "구피") {
+        camera.position.set(bX + 30, bY + 20, bZ + 30);
+        camera.lookAt(bX, bY, bZ);
+      }
 
       pApi.rotation.set(0.5, (r += 0.002), 0);
       pApi.velocity.set((tX - bX) * 1.5, (tY - bY) * 1.5, (tZ - bZ) * 1.5);
     }
   });
   return (
-    <group ref={pRef} {...props} dispose={null}>
+    <group
+      ref={pRef}
+      {...props}
+      dispose={null}
+      onClick={(e) => {
+        const { oceanCameraTarget } = OceanStore.getState();
+        OceanStore.setState({
+          oceanCameraTarget: oceanCameraTarget !== "구피" ? "구피" : false,
+        });
+        e.stopPropagation();
+      }}>
       <mesh ref={rRef} name="rotation_pos" position={[0, 0, -5]}>
         {/* <boxGeometry args={[1, 1, 1]} /> */}
         {/* <meshNormalMaterial /> */}
