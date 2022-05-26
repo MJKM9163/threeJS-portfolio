@@ -11,8 +11,17 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import { useSphere } from "@react-three/cannon";
 import { useFrame } from "@react-three/fiber";
 import { Vector3 } from "three";
-let r = 0;
+import { OceanStore } from "../OceanStore";
+
 export default function BlueWhale({ ...props }) {
+  let y = 0;
+  let z = [0, 0]; // index 1 현재 값, index 2 상승 폭
+  let r = [-1, 0];
+  let check = false;
+  let straight = false;
+  let before = null;
+  let cameraTarget = useRef(OceanStore.getState().oceanCameraTarget);
+
   const rRef = useRef();
   const [pRef, pApi] = useSphere(() => ({
     type: "Kinematic",
@@ -24,16 +33,66 @@ export default function BlueWhale({ ...props }) {
     "/oceans/blueWhale/scene.gltf"
   );
   const { actions } = useAnimations(animations, pRef);
+
   useEffect(() => {
     actions["Swimming"].play();
   }, []);
-  useFrame(() => {
+
+  useEffect(() => {
+    OceanStore.subscribe(
+      (state) => (cameraTarget.current = state.oceanCameraTarget),
+      (state) => state
+    );
+  });
+
+  useFrame(({ camera }) => {
     if (rRef.current) {
       const [tX, tY, tZ] = rRef.current.getWorldPosition(new Vector3());
       const [bX, bY, bZ] = pRef.current.getWorldPosition(new Vector3());
-      pRef.current.lookAt(tX, tY, -tZ);
-      pApi.rotation.set(0, (r -= 0.0005), 0);
-      pApi.velocity.set((tX - bX) * 4, (tY - bY) * 4, (tZ - bZ) * 4);
+      pRef.current.lookAt(tX, tY, tZ);
+
+      if (cameraTarget.current === "대왕고래") {
+        camera.position.set(bX + 300, bY + 750, bZ + 600);
+        camera.lookAt(bX, bY, bZ);
+      }
+
+      if (!check) {
+        check = true;
+        const num = Math.floor(Math.random() * 3);
+        setTimeout(() => {
+          check = false;
+        }, 6000);
+
+        if (num === 0) {
+          r[1] = 0.003;
+          z[1] = -0.003;
+          straight = false;
+          before = "left";
+        } else if (num === 1) {
+          r[1] = -0.003;
+          z[1] = 0.003;
+          straight = false;
+          before = "right";
+        } else if (num === 2) {
+          r[1] = 0;
+          z[1] = z[0] > 0 ? -0.003 : z[0] === 0 ? 0 : 0.003;
+          straight = true;
+        }
+      }
+      pApi.rotation.set(y, (r[0] += r[1]), (z[0] += z[1]));
+      if (!straight && (z[0] > 0.5 || z[0] < -0.5)) {
+        z[1] = 0;
+        z[0] = z[0] > 0.5 ? 0.49 : -0.49;
+      } else if (straight) {
+        if (before === "left" && z[0] > -0.01) {
+          z[1] = 0;
+          z[0] = 0;
+        } else if (before === "right" && z[0] < 0.01) {
+          z[1] = 0;
+          z[0] = 0;
+        }
+      }
+      pApi.velocity.set((tX - bX) * 5, (tY - bY) * 5, (tZ - bZ) * 5);
       if (bX < -1600) pApi.position.set(1590, bY, bZ);
       if (bX > 1600) pApi.position.set(-1590, bY, bZ);
       if (bZ < -1600) pApi.position.set(bX, bY, 1590);
@@ -42,7 +101,18 @@ export default function BlueWhale({ ...props }) {
   });
 
   return (
-    <group ref={pRef} {...props} dispose={null}>
+    <group
+      ref={pRef}
+      {...props}
+      dispose={null}
+      onClick={(e) => {
+        const { oceanCameraTarget } = OceanStore.getState();
+        OceanStore.setState({
+          oceanCameraTarget:
+            oceanCameraTarget !== "대왕고래" ? "대왕고래" : false,
+        });
+        e.stopPropagation();
+      }}>
       <mesh ref={rRef} name="rotation_pos" position={[0, 0, 50]}></mesh>
       <group name="Sketchfab_Scene">
         <group
