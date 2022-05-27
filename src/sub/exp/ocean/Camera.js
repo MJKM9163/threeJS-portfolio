@@ -9,8 +9,8 @@ export const Camera = () => {
   const cameraTarget = OceanStore((state) => state.oceanCameraTarget);
 
   if (!cameraTarget) {
-    camera.position.set(0, 1800, 0);
-    // camera.position.set(600, 1300, 1300);
+    //camera.position.set(0, 1800, 0);
+    camera.position.set(600, 1000, 1000);
     camera.lookAt(0, 0, 0);
   }
 
