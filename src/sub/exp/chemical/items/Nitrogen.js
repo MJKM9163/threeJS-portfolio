@@ -5,9 +5,6 @@ import "../drag.css";
 
 let x = 0;
 export const Nitrogen = forwardRef((_, ref) => {
-  useFrame(() => {
-    console.log(ref.current.position);
-  });
   return (
     <group ref={ref}>
       <Html distanceFactor={2000}>

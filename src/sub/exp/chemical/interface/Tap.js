@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { ChemicalStore } from "../ChemicalStore";
+import { useEffect, useRef } from "react";
 
 const TapContainer = styled.div`
   position: absolute;
@@ -74,6 +75,15 @@ const TapContainer = styled.div`
 `;
 
 export const Tap = () => {
+  const select = useRef(ChemicalStore.getState().pointerSelect);
+
+  useEffect(() => {
+    ChemicalStore.subscribe(
+      (state) => (select.current = state.pointerSelect),
+      (state) => state
+    );
+  });
+
   return (
     <TapContainer>
       <div className="title">
@@ -82,7 +92,9 @@ export const Tap = () => {
       <div
         className="itemBox"
         onClick={() => {
-          ChemicalStore.setState({ pointerSelect: "hydrogen" });
+          ChemicalStore.setState({
+            pointerSelect: select.current !== "hydrogen" ? "hydrogen" : false,
+          });
         }}>
         <div className="image hydrogen">
           <div>H</div>
@@ -94,7 +106,9 @@ export const Tap = () => {
       <div
         className="itemBox"
         onClick={() => {
-          ChemicalStore.setState({ pointerSelect: "carbon" });
+          ChemicalStore.setState({
+            pointerSelect: select.current !== "carbon" ? "carbon" : false,
+          });
         }}>
         <div className="image carbon">
           <div>C</div>
@@ -106,7 +120,9 @@ export const Tap = () => {
       <div
         className="itemBox"
         onClick={() => {
-          ChemicalStore.setState({ pointerSelect: "nitrogen" });
+          ChemicalStore.setState({
+            pointerSelect: select.current !== "nitrogen" ? "nitrogen" : false,
+          });
         }}>
         <div className="image nitrogen">
           <div>N</div>
@@ -118,7 +134,9 @@ export const Tap = () => {
       <div
         className="itemBox"
         onClick={() => {
-          ChemicalStore.setState({ pointerSelect: "oxygen" });
+          ChemicalStore.setState({
+            pointerSelect: select.current !== "oxygen" ? "oxygen" : false,
+          });
         }}>
         <div className="image oxygen">
           <div>O</div>

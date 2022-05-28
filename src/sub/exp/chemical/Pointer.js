@@ -1,5 +1,6 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
+import { Vector3 } from "three";
 import { ChemicalStore } from "./ChemicalStore";
 import { Carbon } from "./items/Carbon";
 import { Hydrogen } from "./items/Hydrogen";
@@ -21,11 +22,17 @@ export const Pointer = () => {
         0
       );
       //  atom.current.position.set(x, y, z);
+      //console.log(atom.current.getWorldPosition(new Vector3()));
+      console.log(x, y, z);
     }
-    //console.log(e);
+    //console.log(raycaster.ray.origin);
   });
   return (
     <group ref={ref}>
+      <mesh>
+        <planeGeometry args={[1000, 1000]} />
+        <meshBasicMaterial color={"gray"} />
+      </mesh>
       {select === "hydrogen" ? <Hydrogen ref={atom} /> : null}
       {select === "carbon" ? <Carbon ref={atom} /> : null}
       {select === "nitrogen" ? <Nitrogen ref={atom} /> : null}
