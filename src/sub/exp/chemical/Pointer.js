@@ -1,31 +1,42 @@
 import { useFrame, useThree } from "@react-three/fiber";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Vector3 } from "three";
 import { ChemicalStore } from "./ChemicalStore";
 import { Carbon } from "./items/Carbon";
 import { Hydrogen } from "./items/Hydrogen";
 import { Nitrogen } from "./items/Nitrogen";
 import { Oxygen } from "./items/Oxygen";
-
+let t = [100, 100];
 export const Pointer = () => {
   const select = ChemicalStore((state) => state.pointerSelect);
   const ref = useRef();
   const atom = useRef();
-  const { viewport } = useThree();
-  useFrame(({ raycaster, mouse }, e) => {
+
+  // const aa = (e) => {
+  //   t = [e.screenX, e.screenY];
+  //   console.log(e);
+  // };
+  // useEffect(() => {
+  //   window.addEventListener("mousemove", aa);
+  // });
+
+  useFrame(({ mouse, viewport, camera }) => {
     if (atom.current) {
-      let [x, y, z] = raycaster.ray.direction;
-      let [x2, y2] = mouse;
+      let [x, y, z] = camera.position;
+      let { width, height } = viewport.getCurrentViewport();
+      //atom.current.position.set((width - t[0]) * -1, height - t[1], 0);
       atom.current.position.set(
-        (mouse.x * viewport.width) / 1.5,
-        (mouse.y * viewport.height) / 1.5,
+        (mouse.x * width) / 2 + x + 25,
+        (mouse.y * height) / 2 + y + 25,
         0
       );
-      //  atom.current.position.set(x, y, z);
-      //console.log(atom.current.getWorldPosition(new Vector3()));
-      console.log(x, y, z);
+      //console.log(width, height);
     }
-    //console.log(raycaster.ray.origin);
+    if (camera.position.z >= 1500) {
+      camera.position.z = 1499;
+    } else if (camera.position.z <= 499) {
+      camera.position.z = 500;
+    }
   });
   return (
     <group ref={ref}>
